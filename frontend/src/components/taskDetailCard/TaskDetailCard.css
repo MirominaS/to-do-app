@@ -1,0 +1,81 @@
+.task-detail-container{
+    height: 20vh;
+    width: 60vh;
+    background-color:#E5E4E2;
+    border: none;
+    border-radius: 10px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+
+    .task-details{
+        height: 80%;
+        width: 60%;
+        display: flex;
+        flex-direction: column;
+        justify-content: start;
+        gap: 10px;
+
+        .task-details-title{
+            font-size: xx-large;
+            font-weight: 600;
+        }
+
+        .task-details-description{
+            font-size: large;
+        }
+    }
+
+    .task-buttons{
+        height: 80%;
+        width: 30%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        .task-buttons-ud,.task-buttons-done{
+            height: 50%;
+            width: 100%;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+        }
+
+        .task-buttons-update ,.task-buttons-delete{
+            height: 30px;
+            width: 30px;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            border-radius: 5px;
+            font-size: larger;
+            color: white;
+        }
+        .task-buttons-update{
+            background-color: green;            
+        }
+
+        .task-buttons-delete{
+            background-color: red;
+        }
+
+        .task-buttons-update:hover ,.task-buttons-delete:hover{
+            color: black;
+        }
+
+        .task-buttons-done button{
+            border: 1px solid black;
+            border-radius: 5px;
+            height: 25px;
+            width: 85px;
+        }
+
+        .task-buttons-done button:hover{
+            background-color: black;
+            color: white;
+        }
+
+
+    }
+}
