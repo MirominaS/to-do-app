@@ -1,12 +1,23 @@
 .task-detail-container{
-    height: 20vh;
-    width: 60vh;
+    height: 18%;
+    width: 70%;
     background-color:#E5E4E2;
     border: none;
     border-radius: 10px;
     display: flex;
     justify-content: space-around;
     align-items: center;
+    
+
+    .task-details-full{
+        height: 100%;
+        width: 100%;
+        background-color:#E5E4E2;
+        border: none;
+        border-radius: 10px;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
 
     .task-details{
         height: 80%;
@@ -17,7 +28,7 @@
         gap: 10px;
 
         .task-details-title{
-            font-size: xx-large;
+            font-size: x-large;
             font-weight: 600;
         }
 
@@ -77,5 +88,6 @@
         }
 
 
+    }
     }
 }

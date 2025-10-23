@@ -11,11 +11,10 @@ const TaskDetailCard = ({title = "Title",description = "Description",handleUpdat
     }
     
   return (
-    <div>
+    <div  className='task-detail-container'>
     {console.log(showCard)}
     {showCard &&
-    <div className='task-detail-container'>
-        
+    <div className='task-details-full'>        
         <div className='task-details'>
             <div className='task-details-title'>{title}</div>
             <div className='task-details-description'>{description}</div>
