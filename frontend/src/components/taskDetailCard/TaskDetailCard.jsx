@@ -3,13 +3,11 @@ import './TaskDetailCard.css'
 import { MdDelete } from "react-icons/md";
 import { MdEdit } from "react-icons/md";
 
-const TaskDetailCard = ({title = "Title",description = "Description",handleUpdate,handleDelete,handleDone,showCard}) => {
+const TaskDetailCard = ({title = "Title",description = "Description",handleUpdate,handleDelete,handleDone}) => {
    
     
   return (
     <div  className='task-detail-container'>
-    {console.log(showCard)}
-    {showCard &&
     <div className='task-details-full'>        
         <div className='task-details'>
             <div className='task-details-title'>{title}</div>
@@ -29,7 +27,7 @@ const TaskDetailCard = ({title = "Title",description = "Description",handleUpdat
             </div>
         </div>
     </div>
-    }
+    {/* } */}
     </div>
   )
 }

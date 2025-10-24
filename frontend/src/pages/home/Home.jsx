@@ -7,13 +7,7 @@ const Home = () => {
   const [title,setTitle] = useState("");
   const [description, setDescription] = useState("")
   const [error, setError] = useState({})
-  const [showCard ,setShowCard] = useState(true);
   const [listTasks, setListTasks] = useState([]);
-
-
-  const handleDone = () => {
-      setShowCard((showCard) => !showCard)        
-  }
 
   const handleTitle = (e) => {
     setTitle(e.target.value)
@@ -44,12 +38,22 @@ const Home = () => {
   const handleAdd = () => {
     const validate = validation();
     if(validate){
-      setListTasks([{title:title,description:description},...listTasks]);
+      const newTask = {
+        id: Date.now(),
+        title:title,
+        description: description,
+        done:false
+      }
+      setListTasks([newTask,...listTasks]);
       setTitle("");
       setDescription(""); 
+    }   
+  }
 
-    }
-   
+    const handleDone = (id) => {
+      setListTasks(listTasks.map(listTask =>
+        listTask.id === id ? {...listTask,done:true} : listTask      
+      ))            
   }
 
   return (
@@ -67,18 +71,17 @@ const Home = () => {
       </div>
 
       <div className='home-task-card'>
-      {listTasks.length > 0 && listTasks.slice(0,5).map((listTask,index) => 
-          <TaskDetailCard
-            key={index}
-            title={listTask.title}
-            description={listTask.description}
-            handleDone={handleDone}
-            showCard={showCard}
-        />
-      )
-      }
+        {listTasks.length > 0 && listTasks.slice(0,5).map((listTask) => 
+          !listTask.done ? (
+            <TaskDetailCard
+              key={listTask.id}
+              title={listTask.title}
+              description={listTask.description}
+              handleDone={()=>handleDone(listTask.id)}
+            />
+          ): null 
+        )}
       </div>
-      
     </div>
   )
 }
