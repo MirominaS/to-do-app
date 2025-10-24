@@ -44,7 +44,7 @@ const Home = () => {
   const handleAdd = () => {
     const validate = validation();
     if(validate){
-      setListTasks([...listTasks,{title:title,description:description}]);
+      setListTasks([{title:title,description:description},...listTasks]);
       setTitle("");
       setDescription(""); 
 
@@ -67,7 +67,7 @@ const Home = () => {
       </div>
 
       <div className='home-task-card'>
-      {listTasks.length > 0 && listTasks.map((listTask,index) => 
+      {listTasks.length > 0 && listTasks.slice(0,5).map((listTask,index) => 
           <TaskDetailCard
             key={index}
             title={listTask.title}
