@@ -37,7 +37,6 @@
     .add-task-description{
          ::placeholder{
             color: #303030;
-            line-height: 100px;
         }
 
         .center-text{
