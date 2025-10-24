@@ -1,7 +1,16 @@
 import React from 'react'
 import './AddTask.css'
 
-const AddTask = ({handleTitle,handleDescription,handleAdd,titleErrorMsg,descErrorMsg,valueTitle,valueDescription}) => {
+const AddTask = ({
+    handleTitle,
+    handleDescription,
+    handleAdd,
+    titleErrorMsg,
+    descErrorMsg,
+    valueTitle,
+    valueDescription,
+    label
+  }) => {
   return (
     <div className='add-task-container'>
         <div className='add-task-heading'>Add a Task</div>
@@ -11,12 +20,18 @@ const AddTask = ({handleTitle,handleDescription,handleAdd,titleErrorMsg,descErro
         </div>
 
         <div className='add-task-description'>
-            <textarea rows={5} type="text" placeholder='Description' value={valueDescription} onChange={handleDescription} />   
+            <textarea 
+              rows={5} 
+              type="text" 
+              placeholder='Description' 
+              value={valueDescription} 
+              onChange={handleDescription} 
+            />   
             {descErrorMsg} 
         </div>
         <div className='add-task-button'>
           <div className='task-button'>
-            <button onClick={handleAdd}>Add</button>
+            <button onClick={handleAdd}>{label}</button>
           </div>           
             
         </div>
