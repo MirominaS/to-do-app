@@ -1,14 +1,10 @@
 import React, { useState } from 'react'
 import './TaskDetailCard.css'
 import { MdDelete } from "react-icons/md";
-import { RxUpdate } from "react-icons/rx";
+import { MdEdit } from "react-icons/md";
 
-const TaskDetailCard = ({title = "Title",description = "Description",handleUpdate,handleDelete}) => {
-    const [showCard ,setShowCard] = useState(true);
-
-    const handleDone = () => {
-        setShowCard((showCard) => !showCard)        
-    }
+const TaskDetailCard = ({title = "Title",description = "Description",handleUpdate,handleDelete,handleDone,showCard}) => {
+   
     
   return (
     <div  className='task-detail-container'>
@@ -22,7 +18,7 @@ const TaskDetailCard = ({title = "Title",description = "Description",handleUpdat
         <div className='task-buttons'>
             <div className='task-buttons-ud'>
                 <div className='task-buttons-update' onClick={handleUpdate}>
-                    <RxUpdate />
+                    <MdEdit />
                 </div>
                 <div className='task-buttons-delete' onClick={handleDelete}>
                     <MdDelete />
