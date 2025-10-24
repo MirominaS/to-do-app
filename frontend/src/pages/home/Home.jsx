@@ -6,8 +6,14 @@ import './Home.css'
 const Home = () => {
   const [title,setTitle] = useState("");
   const [description, setDescription] = useState("")
-  const [isAdd, setIsAdd] = useState(false);
   const [error, setError] = useState({})
+  const [showCard ,setShowCard] = useState(true);
+  const [listTasks, setListTasks] = useState([]);
+
+
+  const handleDone = () => {
+      setShowCard((showCard) => !showCard)        
+  }
 
   const handleTitle = (e) => {
     setTitle(e.target.value)
@@ -38,10 +44,10 @@ const Home = () => {
   const handleAdd = () => {
     const validate = validation();
     if(validate){
-       setIsAdd(true)
-    }else{
-      setIsAdd(false)
-      console.log("helloo")
+      setListTasks([...listTasks,{title:title,description:description}]);
+      setTitle("");
+      setDescription(""); 
+
     }
    
   }
@@ -53,40 +59,23 @@ const Home = () => {
           handleTitle={handleTitle}
           handleDescription={handleDescription}
           handleAdd={handleAdd}
-          titleErrorMsg={error.tit && <span>{error.tit}</span>}
-          descErrorMsg={error.desc && <span>{error.desc}</span>}
+          valueTitle={title}
+          valueDescription={description}
+          titleErrorMsg={error.tit && <span className='error-msg'>{error.tit}</span>}
+          descErrorMsg={error.desc && <span className='error-msg'>{error.desc}</span>}
         />
       </div>
+
       <div className='home-task-card'>
-      {isAdd &&
-        <TaskDetailCard
-          title={title}
-          description={description}
+      {listTasks.length > 0 && listTasks.map((listTask,index) => 
+          <TaskDetailCard
+            key={index}
+            title={listTask.title}
+            description={listTask.description}
+            handleDone={handleDone}
+            showCard={showCard}
         />
-      }
-      {isAdd &&
-        <TaskDetailCard
-          title={title}
-          description={description}
-        />
-      }
-      {isAdd &&
-        <TaskDetailCard
-          title={title}
-          description={description}
-        />
-      }
-      {isAdd &&
-        <TaskDetailCard
-          title={title}
-          description={description}
-        />
-      }
-      {isAdd &&
-        <TaskDetailCard
-          title={title}
-          description={description}
-        />
+      )
       }
       </div>
       
