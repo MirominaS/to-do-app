@@ -24,14 +24,24 @@
         padding-left: 5px;
     }
 
-    .add-task-title input{
-            height: var(--textbox-height);           
+    .add-task-title {
+        ::placeholder{
+            color: #303030;
+        }
+        input{
+            height: var(--textbox-height);     
+                  
+        }
     }
 
     .add-task-description{
-
-        ::placeholder{
+         ::placeholder{
+            color: #303030;
             line-height: 100px;
+        }
+
+        .center-text{
+            padding-top: px;
         }
 
         textarea{
@@ -44,7 +54,6 @@
         border: 1px solid rgb(0, 0, 0);
     }
     
-
     .add-task-button{
         display: flex;
         justify-content: end;
