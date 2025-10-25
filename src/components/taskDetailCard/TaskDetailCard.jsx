@@ -8,7 +8,8 @@ const TaskDetailCard = ({
         description = "Description",
         handleUpdate,
         handleDelete,
-        handleDone
+        handleDone,
+        doneLabel
     }) => {
     
     return (
@@ -28,7 +29,7 @@ const TaskDetailCard = ({
                     </div>
                 </div>
                 <div className='task-buttons-done'>
-                    <button onClick={handleDone}>Done</button>
+                    <button onClick={handleDone}>{doneLabel}</button>
                 </div>
             </div>
         </div>

@@ -4,12 +4,16 @@ import TaskDetailCard from '../../components/taskDetailCard/TaskDetailCard'
 import { v4 as uuidv4 } from 'uuid';
 import './Home.css'
 import { getService, postService } from '../../utils/httpServices';
+import { PulseLoader } from 'react-spinners';
+
 
 const Home = () => {
   const [title,setTitle] = useState("");
   const [description, setDescription] = useState("")
   const [error, setError] = useState({})
   const [listTasks, setListTasks] = useState([]);
+  const [isLoadingAdd, setIsLoadingAdd] = useState(false)
+  const [isLoadingDone, setIsLoadingDone] = useState(false)
   const [update, setUpdate] = useState(false)
   const [updatedId, setUpdatedId] = useState(null)
 
@@ -63,6 +67,7 @@ const Home = () => {
   }
 
   const handleAdd = async() => {
+    setIsLoadingAdd(true)
     const validate = validation();
     if(validate){     
         const newTask = {
@@ -70,13 +75,16 @@ const Home = () => {
           description,
         }
       await postTasks(newTask)
+      setIsLoadingAdd(false)
       }      
       setTitle("");
       setDescription(""); 
   }   
 
   const handleDone = async(id) => {
-      await doneTask(id)
+    setIsLoadingDone(true)
+    await doneTask(id)
+    setIsLoadingDone(false)
   }
 
   const handleUpdate = (id) => {
@@ -100,7 +108,7 @@ const Home = () => {
           valueDescription={description}
           titleErrorMsg={error.tit && <span className='error-msg'>{error.tit}</span>}
           descErrorMsg={error.desc && <span className='error-msg'>{error.desc}</span>}
-          label={update ? "Update" : "Add"}
+          label={isLoadingAdd ? <PulseLoader size={5} color='white'/> : "Add"}
         />
       </div>
 
@@ -112,6 +120,7 @@ const Home = () => {
               title={listTask.title}
               description={listTask.description}
               handleDone={()=>{handleDone(listTask.id);console.log("Completed",listTask.title)}}
+              doneLabel={isLoadingDone ? <PulseLoader size={5} color='white'/> : 'Done'}
               handleUpdate={()=>{handleUpdate(listTask.id);console.log("Updated"),listTask.title}}
               handleDelete={()=>{handleDelete(listTask.id);console.log("Deleted",listTask.title)}}
             />
