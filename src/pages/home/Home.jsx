@@ -3,7 +3,7 @@ import AddTask from '../../components/addTask/AddTask'
 import TaskDetailCard from '../../components/taskDetailCard/TaskDetailCard'
 import { v4 as uuidv4 } from 'uuid';
 import './Home.css'
-import { getService } from '../../utils/httpServices';
+import { getService, postService } from '../../utils/httpServices';
 
 const Home = () => {
   const [title,setTitle] = useState("");
@@ -17,9 +17,23 @@ const Home = () => {
     fetchTasks()
   },[])
 
-  const fetchTasks = async() => {
-    const tasks = await getService("http://localhost:3300/todo/task")
-    setListTasks(tasks)
+  const fetchTasks = async({limit,offset} = {limit:5,offset:0}) => {
+    const tasks = await getService(`http://localhost:3300/todo/task?limit=${limit}&offset=${offset}`)
+    setListTasks(tasks?.data)
+  }
+
+  const postTasks = async(newTask) => {
+    const {success} = await postService("http://localhost:3300/todo/task",newTask)
+    if(success){
+      fetchTasks()
+    }
+  }
+
+  const doneTask = async(id) => {
+    const {success} = await postService("http://localhost:3300/todo/task/done",{id})
+    if(success){
+      fetchTasks()
+    }
   }
 
   const handleTitle = (e) => {
@@ -48,35 +62,21 @@ const Home = () => {
     return valid;
   }
 
-  const handleAdd = () => {
+  const handleAdd = async() => {
     const validate = validation();
-    if(validate){
-      if(update){
-         setListTasks(listTasks.map(listTask=>
-          listTask.id === updatedId ? {...listTask,title:title,description:description} : listTask
-         )) 
-         setUpdatedId(null)
-         setUpdate(false)
-      }else{
+    if(validate){     
         const newTask = {
-        id: uuidv4(),
-        title:title,
-        description: description,
-        done:false,
-        delete:false
-      }
-      setListTasks([newTask,...listTasks]);
-      }
-      
+          title,
+          description,
+        }
+      await postTasks(newTask)
+      }      
       setTitle("");
       setDescription(""); 
-    }   
-  }
+  }   
 
-    const handleDone = (id) => {
-      setListTasks(listTasks.map(listTask =>
-        listTask.id === id ? {...listTask,done:true} : listTask      
-      ))            
+  const handleDone = async(id) => {
+      await doneTask(id)
   }
 
   const handleUpdate = (id) => {
