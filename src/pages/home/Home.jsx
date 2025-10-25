@@ -1,8 +1,9 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import AddTask from '../../components/addTask/AddTask'
 import TaskDetailCard from '../../components/taskDetailCard/TaskDetailCard'
 import { v4 as uuidv4 } from 'uuid';
 import './Home.css'
+import { getService } from '../../utils/httpServices';
 
 const Home = () => {
   const [title,setTitle] = useState("");
@@ -11,6 +12,15 @@ const Home = () => {
   const [listTasks, setListTasks] = useState([]);
   const [update, setUpdate] = useState(false)
   const [updatedId, setUpdatedId] = useState(null)
+
+  useEffect(()=>{
+    fetchTasks()
+  },[])
+
+  const fetchTasks = async() => {
+    const tasks = await getService("http://localhost:3300/todo/task")
+    setListTasks(tasks)
+  }
 
   const handleTitle = (e) => {
     setTitle(e.target.value)
@@ -95,7 +105,7 @@ const Home = () => {
       </div>
 
       <div className='home-task-card'>
-        {listTasks.length > 0 && listTasks.slice(0,5).map((listTask) => 
+        {listTasks?.length > 0 && listTasks?.slice(0,5)?.map((listTask) => 
           (!listTask.done && !listTask.delete  ) && (
             <TaskDetailCard
               key={listTask.id}
