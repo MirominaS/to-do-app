@@ -1,0 +1,35 @@
+.home-container{
+    height: 95%;
+    width: 95%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 5px solid #E5E4E2;
+    border-radius: 10px;
+
+    .home-add-task,.home-task-card{
+        height: 90%;
+        width: 50%;
+    }
+
+    .home-task-card{
+        display: flex;
+        flex-direction: column;
+        justify-content: start;
+        align-items: center;
+        gap: 5px;
+        border-left: 1px solid #E5E4E2;
+        overflow-y: scroll;
+    }
+
+    .home-add-task{
+         border-right: 1px solid #E5E4E2;
+    }
+    
+    .error-msg{
+        font-size: 12px;
+        font-style: italic;
+        color: red;
+
+    }
+}
