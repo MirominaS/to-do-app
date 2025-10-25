@@ -19,6 +19,7 @@
         align-items: center;
         gap: 5px;
         border-left: 1px solid #E5E4E2;
+        overflow-y: scroll;
     }
 
     .home-add-task{
