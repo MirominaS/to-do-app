@@ -1,5 +1,5 @@
 .task-detail-container{
-    height: 100px;
+    min-height: 100px;
     width: 70%;
     border: none;
     border-radius: 10px;
@@ -28,6 +28,7 @@
         .task-details-title{
             font-size: 20px;
             font-weight: 600;
+            word-break: break-all;
         }
 
         .task-details-description{
@@ -59,14 +60,21 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            border: 1px solid black;
             border-radius: 5px;
             font-size: larger;
-            color: white;
-            background-color: gray; 
+            background: none;
+        }
+        .task-buttons-update{
+            color: green;
+        }
+        .task-buttons-delete{
+            color: red;
         }
 
         .task-buttons-update:hover ,.task-buttons-delete:hover{
-            color: black;
+            background-color: black;
+            color: white;
         }
 
         .task-buttons-done button{
