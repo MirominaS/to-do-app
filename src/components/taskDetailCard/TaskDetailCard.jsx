@@ -20,14 +20,14 @@ const TaskDetailCard = ({
                 <div className='task-details-description'>{description}</div>
             </div>
             <div className='task-buttons'>
-                <div className='task-buttons-ud'>
+                {/* <div className='task-buttons-ud'>
                     <div className='task-buttons-update' onClick={handleUpdate}>
                         <MdEdit />
                     </div>
                     <div className='task-buttons-delete' onClick={handleDelete}>
                         <MdDelete />
                     </div>
-                </div>
+                </div> */}
                 <div className='task-buttons-done'>
                     <button onClick={handleDone}>{doneLabel}</button>
                 </div>
