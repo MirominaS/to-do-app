@@ -22,19 +22,19 @@ const Home = () => {
   },[])
 
   const fetchTasks = async({limit,offset} = {limit:5,offset:0}) => {
-    const tasks = await getService(`http://localhost:3300/todo/task?limit=${limit}&offset=${offset}`)
+    const tasks = await getService(`/todo/task?limit=${limit}&offset=${offset}`)
     setListTasks(tasks?.data)
   }
 
   const postTasks = async(newTask) => {
-    const {success} = await postService("http://localhost:3300/todo/task",newTask)
+    const {success} = await postService(`/todo/task`,newTask)
     if(success){
       fetchTasks()
     }
   }
 
   const doneTask = async(id) => {
-    const {success} = await postService("http://localhost:3300/todo/task/done",{id})
+    const {success} = await postService("/todo/task/done",{id})
     if(success){
       fetchTasks()
     }

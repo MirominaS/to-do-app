@@ -5,7 +5,7 @@ export const getService = async(url) => {
         method: "GET",
     };
     try {
-        const response = await fetch(url, requestOptions)
+        const response = await fetch(import.meta.env.VITE_BASE_URL + url, requestOptions)
         const {data,message,success} = await response.json()
         if(success){
             toast.success(message)
@@ -30,7 +30,7 @@ export const postService = async(url,body) => {
     };
   
     try {
-        const response = await fetch(url,requestOptions)
+        const response = await fetch(import.meta.env.VITE_BASE_URL + url,requestOptions)
         const {data,message,success} = await response.json()
         if(success){
             toast.success(message)
