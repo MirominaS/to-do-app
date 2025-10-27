@@ -8,7 +8,7 @@ import { PulseLoader } from 'react-spinners';
 
 
 const Home = () => {
-  const [title,setTitle] = useState("");
+  const [title,setTitle] = useState(""); 
   const [description, setDescription] = useState("")
   const [error, setError] = useState({})
   const [listTasks, setListTasks] = useState([]);
@@ -18,36 +18,38 @@ const Home = () => {
   const [updatedId, setUpdatedId] = useState(null)
 
   useEffect(()=>{
-    fetchTasks()
+    fetchTasks({isNotify:true})
   },[])
 
-  const fetchTasks = async({limit,offset} = {limit:5,offset:0}) => {
-    const tasks = await getService(`/todo/task?limit=${limit}&offset=${offset}`)
+  const fetchTasks = async({limit,offset,isNotify} = {limit:5,offset:0}) => {
+    const tasks = await getService(`/todo/task?limit=${limit}&offset=${offset}`,isNotify)
+    console.log("get is notify",isNotify)
     setListTasks(tasks?.data)
   }
 
-  const postTasks = async(newTask) => {
-    const {success} = await postService(`/todo/task`,newTask)
+  const postTasks = async(newTask,isNotify) => {
+    const {success} = await postService(`/todo/task`,newTask,isNotify)
     if(success){
-      fetchTasks()
+      fetchTasks({isNotify:false})
     }
   }
 
-  const doneTask = async(id) => {
-    const {success} = await postService("/todo/task/done",{id})
+  const doneTask = async(id,isNotify) => {
+    const {success} = await postService("/todo/task/done",{id},isNotify)
+    console.log("hello")
     if(success){
-      fetchTasks()
+      fetchTasks({isNotify:false})
     }
   }
 
   const handleTitle = (e) => {
     setTitle(e.target.value)
-    console.log(title)
+    // console.log(title)
   }
 
   const handleDescription = (e) => {
     setDescription(e.target.value)
-    console.log(description)
+    // console.log(description)
   }
 
   const validation = () => {
@@ -75,7 +77,7 @@ const Home = () => {
           title,
           description,
         }
-      await postTasks(newTask)
+      await postTasks(newTask,true)
       setIsLoadingAdd(false)
       }      
       setTitle("");
@@ -84,7 +86,7 @@ const Home = () => {
 
   const handleDone = async(id) => {
     setIsLoadingDone(true)
-    await doneTask(id)
+    await doneTask(id,true)
     setIsLoadingDone(false)
   }
 
