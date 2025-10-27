@@ -62,6 +62,7 @@ const Home = () => {
       valid = false;
       console.log("check")
     }
+    setIsLoadingAdd(false)
     setError(err);
     return valid;
   }
