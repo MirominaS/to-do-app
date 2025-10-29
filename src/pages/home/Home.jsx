@@ -3,7 +3,7 @@ import AddTask from '../../components/addTask/AddTask'
 import TaskDetailCard from '../../components/taskDetailCard/TaskDetailCard'
 import { v4 as uuidv4 } from 'uuid';
 import './Home.css'
-import { getService, postService } from '../../utils/httpServices';
+import { getService, postService, putService } from '../../utils/httpServices';
 import { PulseLoader } from 'react-spinners';
 
 
@@ -15,7 +15,7 @@ const Home = () => {
   const [isLoadingAdd, setIsLoadingAdd] = useState(false)
   const [isLoadingDone, setIsLoadingDone] = useState(false)
   const [update, setUpdate] = useState(false)
-  const [updatedId, setUpdatedId] = useState(null)
+  const [toUpdateTask, setToUpdatedTask] = useState({id:"", title:"", description:""})
 
   useEffect(()=>{
     fetchTasks({isNotify:true})
@@ -36,7 +36,14 @@ const Home = () => {
 
   const doneTask = async(id,isNotify) => {
     const {success} = await postService("/todo/task/done",{id},isNotify)
-    console.log("hello")
+    if(success){
+      fetchTasks({isNotify:false})
+    }
+  }
+
+  const updateTask = async(updatedTask,isNotify) => {
+    const {success} = await putService("/todo/task/update",updatedTask,isNotify)
+    console.log("updated task")
     if(success){
       fetchTasks({isNotify:false})
     }
@@ -72,14 +79,26 @@ const Home = () => {
   const handleAdd = async() => {
     setIsLoadingAdd(true)
     const validate = validation();
-    if(validate){     
-        const newTask = {
+    if(validate){ 
+      if(update){
+        const updatedTask = {
+          id:toUpdateTask.id,
           title,
-          description,
+          description
         }
+        await updateTask(updatedTask,true)
+        setUpdate(false)
+        setToUpdatedTask({id:"",title:"",description:""})
+
+      } else{
+        const newTask = {
+        title,
+        description,
+      }
       await postTasks(newTask,true)
       setIsLoadingAdd(false)
-      }      
+      }
+    }      
       setTitle("");
       setDescription(""); 
   }   
@@ -90,8 +109,21 @@ const Home = () => {
     setIsLoadingDone(false)
   }
 
-  const handleUpdate = (id) => {
-    setUpdate(true)    
+  const handleUpdate = async(id) => {
+    const toUpdate = listTasks.find(listTask => listTask.id === id)
+    if(toUpdate){
+      setUpdate(true)
+      // await updateTask(id,true)  
+      setToUpdatedTask({
+        id:toUpdate.id,
+        title:toUpdate.title,
+        description:toUpdate.description
+      })
+      console.log(toUpdate.title)
+      setTitle(toUpdate.title)
+      setDescription(toUpdate.description)
+    }
+  
   }
 
   const handleDelete = (id) => {
@@ -111,12 +143,12 @@ const Home = () => {
           valueDescription={description}
           titleErrorMsg={error.tit && <span className='error-msg'>{error.tit}</span>}
           descErrorMsg={error.desc && <span className='error-msg'>{error.desc}</span>}
-          label={isLoadingAdd ? <PulseLoader size={5} color='white'/> : "Add"}
+          label={update? "Update" : (isLoadingAdd ? <PulseLoader size={5} color='white'/> : "Add")}
         />
       </div>
 
       <div className='home-task-card'>
-        {listTasks?.length > 0 && listTasks?.slice(0,5)?.map((listTask) => 
+        {listTasks?.length > 0 && listTasks?.map((listTask) => 
           (!listTask.done && !listTask.delete  ) && (
             <TaskDetailCard
               key={listTask.id}
